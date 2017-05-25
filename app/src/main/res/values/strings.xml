@@ -24,4 +24,5 @@
         <b>Marcel</b>\n Lead Developer\n marcel@vicious-dino.de\n\n
         <b>Matt</b>\n Story Telling\n matt@vicious-dino.de\n\n
     </string>
+    <string name="title_activity_post">Post</string>
 </resources>
