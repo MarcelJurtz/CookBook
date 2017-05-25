@@ -5,4 +5,23 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txtAboutHeading">About</string>
+    <string name="txtAboutGeneralInfoHeading">General Info</string>
+    <string name="txtAboutGeneralInfo">
+        This app represents our blog, which is also available on blog.vicious-dino.de.\n\n
+        We are currently building VR games in our spare time and we use this blog to document our achievements and all kinds of intereseting stuff that comes across.\n\n
+        We\'d love to hear some feedback, feel free to contact us using one of the listed emails below, or via twitter.
+    </string>
+    <string name="txtAboutAuthorHeading">Authors</string>
+    <string name="txtAboutAuthorText">
+        <b>Aimee</b>\n 3D-modeling\n aimee@vicious-dino.de\n\n
+        <b>Ash</b>\n 3D-modeling\n ash@vicious-dino.de\n\n
+        <b>Dominik</b>\n Lead Dino\n dominik@vicious-dino.de\n\n
+        <b>Manuel</b>\n Illustrations\n manuel@vicious-dino.de\n\n
+        <b>Marcel</b>\n Lead Developer\n marcel@vicious-dino.de\n\n
+        <b>Matt</b>\n Story Telling\n matt@vicious-dino.de\n\n
+    </string>
 </resources>
