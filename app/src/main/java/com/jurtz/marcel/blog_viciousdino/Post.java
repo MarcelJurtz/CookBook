@@ -33,6 +33,8 @@ public class Post extends AppCompatActivity {
 
         final String id = getIntent().getExtras().getString("id");
 
+        final String imageResize = "<style>img{display: inline; height: auto; max-width: 100%;}</style>";
+
         title = (TextView)findViewById(R.id.title);
         content = (WebView)findViewById(R.id.content);
 
@@ -59,10 +61,10 @@ public class Post extends AppCompatActivity {
                 mapContent = (Map<String, Object>) mapPost.get("content");
 
                 String strContent = mapContent.get("rendered").toString();
-                strContent = strContent.replace(readMoreTag,"");
+                strContent = strContent.replace(readMoreTag, "");
 
                 title.setText(mapTitle.get("rendered").toString());
-                content.loadData(strContent,"text/html","UTF-8");
+                content.loadData(imageResize + strContent,"text/html","UTF-8");
 
 
                 progressDialog.dismiss();
