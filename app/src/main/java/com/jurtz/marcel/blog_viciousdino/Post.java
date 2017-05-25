@@ -1,11 +1,15 @@
 package com.jurtz.marcel.blog_viciousdino;
 
 import android.app.ProgressDialog;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,6 +34,13 @@ public class Post extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+        ActionBar tb = getSupportActionBar();
+        tb.setTitle("Vicious Dino - Post");
+
+        // Back button
+        tb.setDisplayHomeAsUpEnabled(true);
+        tb.setDisplayShowHomeEnabled(true);
 
         final String id = getIntent().getExtras().getString("id");
 
@@ -79,5 +90,20 @@ public class Post extends AppCompatActivity {
 
         RequestQueue rQueue = Volley.newRequestQueue(Post.this);
         rQueue.add(request);
+    }
+
+    // Handle actionbar button click
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // API 5+ solution
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
