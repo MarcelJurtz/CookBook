@@ -8,4 +8,19 @@ public class SettingsManager {
         //return posts +
         return "";
     }
+
+    public static String getAuthor(String id) {
+        switch(id) {
+            case  "4.0":
+                return "Marcel";
+            default:
+                return "Anonymous";
+        }
+    }
+
+    public static String formatDate(String date) {
+        date = date.replace("T"," ");
+        date = date.substring(0,date.length()-3);
+        return date;
+    }
 }

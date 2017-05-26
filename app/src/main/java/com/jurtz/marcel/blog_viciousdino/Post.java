@@ -23,12 +23,15 @@ import java.util.Map;
 public class Post extends AppCompatActivity {
 
     TextView title;
+    TextView info;
     WebView content;
     ProgressDialog progressDialog;
     Gson gson;
     Map<String, Object> mapPost;
     Map<String, Object> mapTitle;
     Map<String, Object> mapContent;
+    Double authorID;
+    String publishDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class Post extends AppCompatActivity {
 
         title = (TextView)findViewById(R.id.title);
         content = (WebView)findViewById(R.id.content);
+        info = (TextView)findViewById(R.id.txtAuthorInfo);
 
         progressDialog = new ProgressDialog(Post.this);
         progressDialog.setMessage("Loading...");
@@ -70,12 +74,16 @@ public class Post extends AppCompatActivity {
                 mapPost = (Map<String, Object>) gson.fromJson(s, Map.class);
                 mapTitle = (Map<String, Object>) mapPost.get("title");
                 mapContent = (Map<String, Object>) mapPost.get("content");
+                authorID = Double.parseDouble(mapPost.get("author").toString());
+                publishDate = mapPost.get("date").toString();
 
                 String strContent = mapContent.get("rendered").toString();
                 strContent = strContent.replace(readMoreTag, "");
 
                 title.setText(mapTitle.get("rendered").toString());
-                content.loadData(imageResize + strContent,"text/html","UTF-8");
+                publishDate = SettingsManager.formatDate(publishDate);
+                info.setText(publishDate + " by " + SettingsManager.getAuthor(authorID.toString()));
+                content.loadData(imageResize + strContent, "text/html", "UTF-8");
 
 
                 progressDialog.dismiss();
