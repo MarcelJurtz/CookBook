@@ -11,8 +11,12 @@ public class SettingsManager {
 
     public static String getAuthor(String id) {
         switch(id) {
+            case  "2.0":
+                return "Dominik";
             case  "4.0":
                 return "Marcel";
+            case  "5.0":
+                return "Matt";
             default:
                 return "Anonymous";
         }
