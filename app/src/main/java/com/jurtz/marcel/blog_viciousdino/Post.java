@@ -83,8 +83,8 @@ public class Post extends AppCompatActivity {
                 title.setText(mapTitle.get("rendered").toString());
                 publishDate = SettingsManager.formatDate(publishDate);
                 info.setText(publishDate + " by " + SettingsManager.getAuthor(authorID.toString()));
-                content.loadData(imageResize + strContent, "text/html", "UTF-8");
-
+                // content.loadData(imageResize + strContent, "text/html", "UTF-8");
+                content.loadData(imageResize + strContent, "text/html; charset=utf-8", "utf-8");
 
                 progressDialog.dismiss();
             }
