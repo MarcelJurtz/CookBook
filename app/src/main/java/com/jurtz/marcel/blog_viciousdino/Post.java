@@ -1,15 +1,20 @@
 package com.jurtz.marcel.blog_viciousdino;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+//import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,19 +38,34 @@ public class Post extends AppCompatActivity {
     Double authorID;
     String publishDate;
 
+    int postId;
+
+    boolean isFavourite = false;
+
+    Toolbar menuBar;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.post, menu);
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        ActionBar tb = getSupportActionBar();
-        tb.setTitle("Vicious Dino - Post");
-
-        // Back button
-        tb.setDisplayHomeAsUpEnabled(true);
-        tb.setDisplayShowHomeEnabled(true);
+        menuBar = (Toolbar) findViewById(R.id.postMenuBar);
+        menuBar.setTitle("Vicious Dino - Blog");
+        setSupportActionBar(menuBar);
 
         final String id = getIntent().getExtras().getString("id");
+        postId = Integer.parseInt(id);
+
+        if(SettingsManager.postIsFavourite(getApplicationContext(), postId)) {
+            isFavourite = true;
+        }
 
         final String imageResize = "<style>img{display: inline; height: auto; max-width: 100%;}</style>";
 
@@ -100,7 +120,7 @@ public class Post extends AppCompatActivity {
         rQueue.add(request);
     }
 
-    // Handle actionbar button click
+    /* Handle actionbar button click
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -112,6 +132,28 @@ public class Post extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    */
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_favorite:
+                isFavourite = !isFavourite;
+                if(isFavourite) {
+                    menuBar.getMenu().findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_outline_24dp);
+                } else {
+                    menuBar.getMenu().getItem(0).setIcon(R.drawable.ic_favorite_24dp);
+                    SettingsManager.addFavourite(getApplicationContext(), postId);
+                }
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
         }
     }
 }
