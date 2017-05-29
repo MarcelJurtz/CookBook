@@ -68,6 +68,7 @@ public class FragPosts extends Fragment {
                     postTitle[i] = (String) mapTitle.get("rendered");
                     // Replace HTML elements for colons
                     postTitle[i] = postTitle[i].replace(" &#8211;", ":");
+
                 }
 
                 postList.setAdapter(new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,postTitle));

@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +24,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Map;
 
 public class Post extends AppCompatActivity {
@@ -100,7 +104,9 @@ public class Post extends AppCompatActivity {
                 String strContent = mapContent.get("rendered").toString();
                 strContent = strContent.replace(readMoreTag, "");
 
-                title.setText(mapTitle.get("rendered").toString());
+                String strTitle = mapTitle.get("rendered").toString();
+                title.setText(SettingsManager.fixString(strTitle));
+
                 publishDate = SettingsManager.formatDate(publishDate);
                 info.setText(publishDate + " by " + SettingsManager.getAuthor(authorID.toString()));
                 // content.loadData(imageResize + strContent, "text/html", "UTF-8");
@@ -119,22 +125,6 @@ public class Post extends AppCompatActivity {
         RequestQueue rQueue = Volley.newRequestQueue(Post.this);
         rQueue.add(request);
     }
-
-    /* Handle actionbar button click
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // API 5+ solution
-                onBackPressed();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-    */
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {

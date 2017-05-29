@@ -101,4 +101,10 @@ public class SettingsManager {
             return null;
         }
     }
+
+    public static String fixString(String source) {
+        source = source.replace("&#8211;","-");
+
+        return source;
+    }
 }
