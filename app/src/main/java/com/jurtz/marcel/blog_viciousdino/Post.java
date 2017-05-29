@@ -137,16 +137,29 @@ public class Post extends AppCompatActivity {
     */
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem fave = menu.findItem(R.id.action_add_favorite);
+        MenuItem unFave = menu.findItem(R.id.action_remove_favorite);
+
+        fave.setVisible(!isFavourite);
+        unFave.setVisible(isFavourite);
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_favorite:
-                isFavourite = !isFavourite;
-                if(isFavourite) {
-                    menuBar.getMenu().findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_outline_24dp);
-                } else {
-                    menuBar.getMenu().getItem(0).setIcon(R.drawable.ic_favorite_24dp);
-                    SettingsManager.addFavourite(getApplicationContext(), postId);
-                }
+            case R.id.action_add_favorite:
+                menuBar.getMenu().findItem(R.id.action_add_favorite).setVisible(false);
+                menuBar.getMenu().findItem(R.id.action_remove_favorite).setVisible(true);
+                SettingsManager.addFavourite(getApplicationContext(), postId);
+                return true;
+
+            case R.id.action_remove_favorite:
+                menuBar.getMenu().findItem(R.id.action_add_favorite).setVisible(true);
+                menuBar.getMenu().findItem(R.id.action_remove_favorite).setVisible(false);
+                SettingsManager.removeFavourite(getApplicationContext(), postId);
                 return true;
 
             default:

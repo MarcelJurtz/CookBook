@@ -45,37 +45,28 @@ public class SettingsManager {
         SharedPreferences prefs = context.getSharedPreferences(preferences, Context.MODE_PRIVATE);
         String favString = prefs.getString(prefName, "");
 
-        /*
-        int[] intFavArray;
-        int strArrayLength = 0;
-        if(favString != "") {
-            String[] strFavArray = favString.split("-");
-            int length = strFavArray.length + 1;
-            strArrayLength = strFavArray.length;
-            intFavArray = new int[length];
-            for (int i = 0; i < strFavArray.length; i++) {
-                intFavArray[i] = Integer.parseInt(strFavArray[i]);
-            }
-        } else {
-            intFavArray = new int[1];
-        }
-
-        intFavArray[strArrayLength] = id;
-
-        String newFavs = "";
-        for(int i = 0; i < intFavArray.length; i++)
-        {
-            newFavs += intFavArray[0];
-            if (i != intFavArray.length -1)
-                newFavs += "-";
-        }
-        */
-
         if(favString != "") {
             favString = favString + "-" + id;
         } else {
             favString = id + "";
         }
+        prefs.edit().putString(prefName, favString).commit();
+    }
+
+    public static void removeFavourite(Context context, int id) {
+        SharedPreferences prefs = context.getSharedPreferences(preferences, Context.MODE_PRIVATE);
+        String favString = prefs.getString(prefName, "");
+
+        String[] strArray = favString.split("-");
+        String[] newArray = new String[strArray.length -1];
+        int iterator = 0;
+        for(int i = strArray.length-1; i >= 0; i--) {
+            if(Integer.parseInt(strArray[i]) != id) {
+                newArray[iterator] = strArray[i];
+                iterator++;
+            }
+        }
+        favString = TextUtils.join("-",newArray);
         prefs.edit().putString(prefName, favString).commit();
     }
 
@@ -98,7 +89,7 @@ public class SettingsManager {
         SharedPreferences prefs = context.getSharedPreferences(preferences, Context.MODE_PRIVATE);
         String favString = prefs.getString(prefName, "");
 
-        if(favString != "") {
+        if(favString != "" && favString != null) {
             String[] strFavArray = favString.split("-");
             int length = strFavArray.length + 1;
             int[] intFavArray = new int[length];
