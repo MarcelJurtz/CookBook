@@ -16,4 +16,4 @@ Besides our website, we're present on:
 
 ## License
 
-[MIT](LICENSE.md)
+[MIT](LICENSE)
