@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("ViciousDino - Blog");
+        toolbar.setTitle("Vicious Dino");
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

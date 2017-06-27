@@ -61,7 +61,7 @@ public class Post extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         menuBar = (Toolbar) findViewById(R.id.postMenuBar);
-        menuBar.setTitle("Vicious Dino - Blog");
+        menuBar.setTitle("Vicious Dino");
         setSupportActionBar(menuBar);
 
         final String id = getIntent().getExtras().getString("id");
@@ -71,6 +71,7 @@ public class Post extends AppCompatActivity {
             isFavourite = true;
         }
 
+        final String cssInclusion = "<head><link rel=\"stylesheet\" type=\"text/css\" src=\"enlighterJS.css\"</head>";
         final String imageResize = "<style>img{display: inline; height: auto; max-width: 100%;}</style>";
 
         title = (TextView)findViewById(R.id.title);
@@ -83,6 +84,8 @@ public class Post extends AppCompatActivity {
         progressDialog.show();
 
         final String url = SettingsManager.rtAllPosts + "/" + id + "?fields=title,content";
+
+        // "Read more"-Button on website needs to be removed
         final String readMoreTag =
                 "<div id=\"pressrelease-link-"+id+"\" class=\"sh-link pressrelease-link sh-hide\">"
                 +"<a href=\"#\" onclick=\"showhide_toggle('pressrelease', "+id+", 'Show full article', 'Hide article'); return false;\" aria-expanded=\"false\">"
@@ -110,7 +113,8 @@ public class Post extends AppCompatActivity {
                 publishDate = SettingsManager.formatDate(publishDate);
                 info.setText(publishDate + " by " + SettingsManager.getAuthor(authorID.toString()));
                 // content.loadData(imageResize + strContent, "text/html", "UTF-8");
-                content.loadData(imageResize + strContent, "text/html; charset=utf-8", "utf-8");
+                // content.loadData(imageResize + strContent, "text/html; charset=utf-8", "utf-8");
+                content.loadDataWithBaseURL("file:///android_asset/", cssInclusion + imageResize + strContent, "text/html; charset=utf-8", "utf-8", null);
 
                 progressDialog.dismiss();
             }

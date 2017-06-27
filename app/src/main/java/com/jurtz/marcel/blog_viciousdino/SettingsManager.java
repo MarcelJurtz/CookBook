@@ -19,6 +19,8 @@ public class SettingsManager {
         switch(id) {
             case  "2.0":
                 return "Dominik";
+            case "3.0":
+                return "Manuel";
             case  "4.0":
                 return "Marcel";
             case  "5.0":

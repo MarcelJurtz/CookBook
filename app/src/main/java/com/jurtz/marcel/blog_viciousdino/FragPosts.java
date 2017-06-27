@@ -50,7 +50,7 @@ public class FragPosts extends Fragment {
 
         postList = (ListView)getView().findViewById(R.id.postList);
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Loading...");
+        progressDialog.setMessage("Loading Post...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
 
