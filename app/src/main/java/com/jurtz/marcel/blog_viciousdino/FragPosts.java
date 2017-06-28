@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,15 +28,29 @@ import java.util.Map;
 
 public class FragPosts extends Fragment {
 
-    String url = SettingsManager.url + "/posts?filter[posts_per_page]=10&fields=id,title";
-    List<Object> list;
-    Gson gson;
+    // GUI
     ProgressDialog progressDialog;
     ListView postList;
+    Button cmdNextPage;
+    Button cmdPrevPage;
+    TextView lblPageInfo;
+
+    // VARIABLES
+    String url;
+
+    // to save fetched blog data
+    List<Object> list;
+    Gson gson;
     Map<String,Object> mapPost;
     Map<String,Object> mapTitle;
-    int postID;
     String postTitle[];
+
+    // to submit post id when selected
+    int postID;
+
+    // to keep track on current page of posts
+    int currentBlogPage = 1;
+
 
     @Nullable
     @Override
@@ -48,9 +64,37 @@ public class FragPosts extends Fragment {
     public void onStart() {
         super.onStart();
 
+        lblPageInfo = (TextView)getView().findViewById(R.id.lblPageInfo);
+
+        cmdNextPage = (Button)getView().findViewById(R.id.cmdNextPage);
+        cmdPrevPage = (Button)getView().findViewById(R.id.cmdPrevPage);
+        cmdNextPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentBlogPage++;
+                populateList();
+            }
+        });
+        cmdPrevPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentBlogPage > 1) {
+                    currentBlogPage--;
+                    populateList();
+                }
+            }
+        });
+
         postList = (ListView)getView().findViewById(R.id.postList);
+        populateList();
+    }
+
+    private void populateList() {
+
+        url = SettingsManager.GetPageUrl(currentBlogPage);
+
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Loading Post...");
+        progressDialog.setMessage("Loading...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
 
@@ -73,6 +117,15 @@ public class FragPosts extends Fragment {
 
                 postList.setAdapter(new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,postTitle));
                 progressDialog.dismiss();
+
+                if(currentBlogPage == 1) {
+                    cmdPrevPage.setEnabled(false);
+                } else if (!cmdPrevPage.isEnabled()) {
+                    cmdPrevPage.setEnabled(true);
+                }
+
+                lblPageInfo.setText("Page " + currentBlogPage);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -84,6 +137,7 @@ public class FragPosts extends Fragment {
         RequestQueue rQueue = Volley.newRequestQueue(getActivity());
         rQueue.add(request);
 
+        // start activity for specific post
         postList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

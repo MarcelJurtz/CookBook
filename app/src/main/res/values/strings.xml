@@ -26,4 +26,6 @@
         <b>Matt</b>\n Story Telling\n matt@vicious-dino.de\n\n
     </string>
     <string name="title_activity_post">Post</string>
+    <string name="cmdPrevPage">← previous</string>
+    <string name="cmdNextPage">next →</string>
 </resources>

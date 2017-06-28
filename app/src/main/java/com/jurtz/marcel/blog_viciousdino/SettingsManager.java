@@ -8,7 +8,12 @@ import android.widget.Toast;
 
 public class SettingsManager {
     public static String url = "http://blog.vicious-dino.de/wp-json/wp/v2";
-    public static String rtAllPosts = url + "/posts";
+    public static String allPostsUrl = url + "/posts";
+    public static String posts = url + "/posts";
+    public static String newestTenPosts = url + "/posts?filter[posts_per_page]=10&fields=id,title";
+    public static String GetPageUrl(int page) {
+        return posts + "?page=" + page;
+    }
 
     public static String rtLastXPosts(int posts) {
         //return posts +

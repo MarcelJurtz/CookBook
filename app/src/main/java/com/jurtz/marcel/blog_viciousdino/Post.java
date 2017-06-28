@@ -84,7 +84,7 @@ public class Post extends AppCompatActivity {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
 
-        final String url = SettingsManager.rtAllPosts + "/" + id + "?fields=title,content";
+        final String url = SettingsManager.posts + "/" + id + "?fields=title,content";
 
         // "Read more"-Button on website needs to be removed
         final String readMoreTag =
