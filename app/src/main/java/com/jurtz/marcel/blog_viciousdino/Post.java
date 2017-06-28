@@ -71,8 +71,9 @@ public class Post extends AppCompatActivity {
             isFavourite = true;
         }
 
-        final String cssInclusion = "<head><link rel=\"stylesheet\" type=\"text/css\" src=\"enlighterJS.css\"</head>";
+        //final String cssInclusion = "<head><link rel=\"stylesheet\" type=\"text/css\" src=\"enlighterJS.css\"</head>";
         final String imageResize = "<style>img{display: inline; height: auto; max-width: 100%;}</style>";
+        final String cssInclusion = "<head><link rel=\"stylesheet\" type=\"text/css\" href=\"stylesheet.css\" /></head>";
 
         title = (TextView)findViewById(R.id.title);
         content = (WebView)findViewById(R.id.content);

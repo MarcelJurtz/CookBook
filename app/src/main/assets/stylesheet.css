@@ -1,0 +1,10 @@
+pre {
+
+    padding: 10px;
+    border: 1px solid #161618;
+    border-radius: 5px;
+
+    overflow: auto;
+    max-width: 100%;
+
+}
