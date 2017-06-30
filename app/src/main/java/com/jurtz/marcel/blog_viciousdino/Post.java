@@ -87,13 +87,8 @@ public class Post extends AppCompatActivity {
         final String url = SettingsManager.posts + "/" + id + "?fields=title,content";
 
         // "Read more"-Button on website needs to be removed
-        final String readMoreTag =
-                "<div id=\"pressrelease-link-"+id+"\" class=\"sh-link pressrelease-link sh-hide\">"
-                +"<a href=\"#\" onclick=\"showhide_toggle('pressrelease', "+id+", 'Show full article', 'Hide article'); return false;\" aria-expanded=\"false\">"
-                +"<span id=\"pressrelease-toggle-"+id+"\">Show full article</span>"
-                +"</a>"
-                +"</div>"
-                +"<div id=\"pressrelease-content-"+id+"\" class=\"sh-content pressrelease-content sh-hide\" style=\"display: none;\">";
+        final String readMoreTag = SettingsManager.getReadmoreTag(id);
+
 
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
