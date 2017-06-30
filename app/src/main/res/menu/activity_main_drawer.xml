@@ -6,7 +6,7 @@
         <item
             android:id="@+id/nav_new"
             android:icon="@drawable/ic_whatshot_24dp"
-            android:title="New Posts" />
+            android:title="All Posts" />
         <item
             android:id="@+id/nav_tags"
             android:icon="@drawable/ic_label_outline_24dp"
