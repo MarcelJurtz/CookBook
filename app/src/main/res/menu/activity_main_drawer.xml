@@ -32,6 +32,10 @@
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_info_outline_24dp"
                 android:title="About" />
+            <item
+                android:id="@+id/nav_impressum"
+                android:icon="@drawable/ic_visibility_24dp"
+                android:title="Impressum" />
         </menu>
     </item>
 
