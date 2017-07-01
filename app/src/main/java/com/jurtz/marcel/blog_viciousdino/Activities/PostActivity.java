@@ -1,16 +1,11 @@
-package com.jurtz.marcel.blog_viciousdino;
+package com.jurtz.marcel.blog_viciousdino.Activities;
 
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,12 +19,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.jurtz.marcel.blog_viciousdino.R;
+import com.jurtz.marcel.blog_viciousdino.Settings.AuthorManager;
+import com.jurtz.marcel.blog_viciousdino.Settings.FavouritesManager;
+import com.jurtz.marcel.blog_viciousdino.Settings.PreferencesManager;
+import com.jurtz.marcel.blog_viciousdino.Settings.URLManager;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Map;
 
-public class Post extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity {
 
     TextView title;
     TextView info;
@@ -67,7 +65,7 @@ public class Post extends AppCompatActivity {
         final String id = getIntent().getExtras().getString("id");
         postId = Integer.parseInt(id);
 
-        if(SettingsManager.postIsFavourite(getApplicationContext(), postId)) {
+        if(FavouritesManager.postIsFavourite(getApplicationContext(), postId)) {
             isFavourite = true;
         }
 
@@ -79,15 +77,15 @@ public class Post extends AppCompatActivity {
         content = (WebView)findViewById(R.id.content);
         info = (TextView)findViewById(R.id.txtAuthorInfo);
 
-        progressDialog = new ProgressDialog(Post.this);
+        progressDialog = new ProgressDialog(PostActivity.this);
         progressDialog.setMessage("Loading...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
 
-        final String url = SettingsManager.posts + "/" + id + "?fields=title,content";
+        final String url = URLManager.posts + "/" + id + "?fields=title,content";
 
         // "Read more"-Button on website needs to be removed
-        final String readMoreTag = SettingsManager.getReadmoreTag(id);
+        final String readMoreTag = PreferencesManager.getReadmoreTag(id);
 
 
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -104,10 +102,10 @@ public class Post extends AppCompatActivity {
                 strContent = strContent.replace(readMoreTag, "");
 
                 String strTitle = mapTitle.get("rendered").toString();
-                title.setText(SettingsManager.fixString(strTitle));
+                title.setText(PreferencesManager.fixString(strTitle));
 
-                publishDate = SettingsManager.formatDate(publishDate);
-                info.setText(publishDate + " by " + SettingsManager.getAuthor(authorID.toString()));
+                publishDate = PreferencesManager.formatDate(publishDate);
+                info.setText(publishDate + " by " + AuthorManager.getAuthor(authorID.toString()));
                 // content.loadData(imageResize + strContent, "text/html", "UTF-8");
                 // content.loadData(imageResize + strContent, "text/html; charset=utf-8", "utf-8");
                 content.loadDataWithBaseURL("file:///android_asset/", cssInclusion + imageResize + strContent, "text/html; charset=utf-8", "utf-8", null);
@@ -118,11 +116,11 @@ public class Post extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 progressDialog.dismiss();
-                Toast.makeText(Post.this, id, Toast.LENGTH_LONG).show();
+                Toast.makeText(PostActivity.this, id, Toast.LENGTH_LONG).show();
             }
         });
 
-        RequestQueue rQueue = Volley.newRequestQueue(Post.this);
+        RequestQueue rQueue = Volley.newRequestQueue(PostActivity.this);
         rQueue.add(request);
     }
 
@@ -143,13 +141,13 @@ public class Post extends AppCompatActivity {
             case R.id.action_add_favorite:
                 menuBar.getMenu().findItem(R.id.action_add_favorite).setVisible(false);
                 menuBar.getMenu().findItem(R.id.action_remove_favorite).setVisible(true);
-                SettingsManager.addFavourite(getApplicationContext(), postId);
+                FavouritesManager.addFavourite(getApplicationContext(), postId);
                 return true;
 
             case R.id.action_remove_favorite:
                 menuBar.getMenu().findItem(R.id.action_add_favorite).setVisible(true);
                 menuBar.getMenu().findItem(R.id.action_remove_favorite).setVisible(false);
-                SettingsManager.removeFavourite(getApplicationContext(), postId);
+                FavouritesManager.removeFavourite(getApplicationContext(), postId);
                 return true;
 
             default:

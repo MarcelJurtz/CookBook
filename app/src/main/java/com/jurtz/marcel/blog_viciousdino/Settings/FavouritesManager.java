@@ -1,61 +1,15 @@
-package com.jurtz.marcel.blog_viciousdino;
+package com.jurtz.marcel.blog_viciousdino.Settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.widget.Toast;
 
-public class SettingsManager {
-    public static String url = "http://blog.vicious-dino.de/wp-json/wp/v2";
-    public static String allPostsUrl = url + "/posts";
-    public static String posts = url + "/posts";
-    public static String newestTenPosts = url + "/posts?filter[posts_per_page]=10&fields=id,title";
-    public static String GetPageUrl(int page) {
-        return posts + "?page=" + page;
-    }
-
-    public static String rtLastXPosts(int posts) {
-        //return posts +
-        return "";
-    }
-
-    public static String getAuthor(String id) {
-        switch(id) {
-            case  "2.0":
-                return "Dominik";
-            case "3.0":
-                return "Manuel";
-            case  "4.0":
-                return "Marcel";
-            case  "5.0":
-                return "Matt";
-            default:
-                return "Anonymous";
-        }
-    }
-
-    public static String formatDate(String date) {
-        date = date.replace("T"," ");
-        date = date.substring(0,date.length()-3);
-        return date;
-    }
-
-    public static String getReadmoreTag(String id) {
-        return "<div id=\"pressrelease-link-"+id+"\" class=\"sh-link pressrelease-link sh-hide\">"
-                +"<a href=\"#\" onclick=\"showhide_toggle('pressrelease', "+id+", 'Show full article', 'Hide article'); return false;\" aria-expanded=\"false\">"
-                +"<span id=\"pressrelease-toggle-"+id+"\">Show full article</span>"
-                +"</a>"
-                +"</div>"
-                +"<div id=\"pressrelease-content-"+id+"\" class=\"sh-content pressrelease-content sh-hide\" style=\"display: none;\">";
-    }
-
-    // SHARED PREFERENCES
-
+public class FavouritesManager {
     private static final String preferences = "favourites";
     private static final String prefName = "favArray";
 
 
+    // add article to favourites
     public static void addFavourite(Context context, int id) {
 
         SharedPreferences prefs = context.getSharedPreferences(preferences, Context.MODE_PRIVATE);
@@ -69,6 +23,7 @@ public class SettingsManager {
         prefs.edit().putString(prefName, favString).commit();
     }
 
+    // remove article from favourites
     public static void removeFavourite(Context context, int id) {
         SharedPreferences prefs = context.getSharedPreferences(preferences, Context.MODE_PRIVATE);
         String favString = prefs.getString(prefName, "");
@@ -82,10 +37,11 @@ public class SettingsManager {
                 iterator++;
             }
         }
-        favString = TextUtils.join("-",newArray);
+        favString = TextUtils.join("-", newArray);
         prefs.edit().putString(prefName, favString).commit();
     }
 
+    // check if article is favourite
     public static boolean postIsFavourite(Context context, int id) {
         int[] favs = getFavourites(context);
         boolean contained = false;
@@ -101,6 +57,7 @@ public class SettingsManager {
         return contained;
     }
 
+    // get all favourite articles by id
     public static int[] getFavourites(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(preferences, Context.MODE_PRIVATE);
         String favString = prefs.getString(prefName, "");
@@ -116,11 +73,5 @@ public class SettingsManager {
         } else {
             return null;
         }
-    }
-
-    public static String fixString(String source) {
-        source = source.replace("&#8211;","-");
-
-        return source;
     }
 }

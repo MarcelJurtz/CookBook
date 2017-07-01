@@ -1,4 +1,4 @@
-package com.jurtz.marcel.blog_viciousdino.PostFragments;
+package com.jurtz.marcel.blog_viciousdino.Fragments;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -20,9 +20,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.jurtz.marcel.blog_viciousdino.Post;
+import com.jurtz.marcel.blog_viciousdino.Activities.PostActivity;
 import com.jurtz.marcel.blog_viciousdino.R;
-import com.jurtz.marcel.blog_viciousdino.SettingsManager;
+import com.jurtz.marcel.blog_viciousdino.Settings.PreferencesManager;
+import com.jurtz.marcel.blog_viciousdino.Settings.URLManager;
 
 import java.util.List;
 import java.util.Map;
@@ -65,7 +66,7 @@ public class FragNewPosts extends Fragment {
 
     private void populateList() {
 
-        url = SettingsManager.newestTenPosts;
+        url = URLManager.getNewestPosts(10);
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
@@ -110,7 +111,7 @@ public class FragNewPosts extends Fragment {
                 mapPost = (Map<String, Object>) list.get(position);
                 postID = ((Double) mapPost.get("id")).intValue();
 
-                Intent intent = new Intent(getActivity().getApplicationContext(), Post.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), PostActivity.class);
                 intent.putExtra("id", "" + postID);
                 startActivity(intent);
             }

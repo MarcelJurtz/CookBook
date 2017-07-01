@@ -1,4 +1,4 @@
-package com.jurtz.marcel.blog_viciousdino;
+package com.jurtz.marcel.blog_viciousdino.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

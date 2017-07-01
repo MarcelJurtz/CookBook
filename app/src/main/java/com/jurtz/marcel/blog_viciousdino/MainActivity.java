@@ -12,8 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.jurtz.marcel.blog_viciousdino.PostFragments.FragAllPosts;
-import com.jurtz.marcel.blog_viciousdino.PostFragments.FragNewPosts;
+import com.jurtz.marcel.blog_viciousdino.Fragments.FragAllPosts;
+import com.jurtz.marcel.blog_viciousdino.Fragments.FragAuthors;
+import com.jurtz.marcel.blog_viciousdino.Fragments.FragNewPosts;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
