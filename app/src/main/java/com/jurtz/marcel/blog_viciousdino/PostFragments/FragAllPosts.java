@@ -1,4 +1,4 @@
-package com.jurtz.marcel.blog_viciousdino;
+package com.jurtz.marcel.blog_viciousdino.PostFragments;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -22,11 +22,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.jurtz.marcel.blog_viciousdino.Post;
+import com.jurtz.marcel.blog_viciousdino.R;
+import com.jurtz.marcel.blog_viciousdino.SettingsManager;
 
 import java.util.List;
 import java.util.Map;
 
-public class FragPosts extends Fragment {
+public class FragAllPosts extends Fragment {
 
     // GUI
     ProgressDialog progressDialog;
@@ -57,7 +60,7 @@ public class FragPosts extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //returning our layout file
         //change R.layout.yourlayoutfilename for each of your fragments
-        return inflater.inflate(R.layout.frag_posts, container, false);
+        return inflater.inflate(R.layout.frag_all_posts, container, false);
     }
 
     @Override

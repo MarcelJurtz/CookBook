@@ -28,4 +28,7 @@
     <string name="title_activity_post">Post</string>
     <string name="cmdPrevPage">← previous</string>
     <string name="cmdNextPage">next →</string>
+
+    <string name="page">Page</string>
+    <string name="new_posts">Newest Posts</string>
 </resources>

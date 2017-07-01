@@ -2,12 +2,7 @@ package com.jurtz.marcel.blog_viciousdino;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,21 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-
-import java.util.List;
-import java.util.Map;
+import com.jurtz.marcel.blog_viciousdino.PostFragments.FragAllPosts;
+import com.jurtz.marcel.blog_viciousdino.PostFragments.FragNewPosts;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -51,6 +34,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Load new posts
+        Fragment fragment = null;
+        fragment = new FragNewPosts();
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        ft.commit();
+        drawer.closeDrawer(GravityCompat.START);
     }
 
     @Override
@@ -95,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch(id) {
             case R.id.nav_new:
-                fragment = new FragPosts();
+                fragment = new FragAllPosts();
                 break;
             case R.id.nav_about:
                 fragment = new FragAuthors();
