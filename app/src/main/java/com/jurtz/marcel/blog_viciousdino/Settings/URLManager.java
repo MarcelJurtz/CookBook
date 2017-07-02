@@ -22,8 +22,8 @@ public class URLManager {
     public static String tags = url + "/tags";
 
     // posts by tag
-    public static String getUrlPostsByTag(String tag) {
-        return posts + "?tag=" + tag;
+    public static String getUrlPostsByTag(int tagID) {
+        return posts + "?tags=" + tagID;
     }
 
 }

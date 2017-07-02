@@ -4,7 +4,6 @@ public class Tag {
 
     private String title;
     private int id;
-    private String url;
 
     public Tag() {
 
@@ -14,18 +13,13 @@ public class Tag {
         this.title = title;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public void setID(int id) {
         this.id = id;
     }
 
-    public Tag(int id, String title, String url) {
+    public Tag(int id, String title) {
         this.id = id;
         this.title = title;
-        this.url = url;
     }
 
     public String getTitle() {
@@ -34,9 +28,5 @@ public class Tag {
 
     public int getID() {
         return this.id;
-    }
-
-    public String getUrl() {
-        return this.url;
     }
 }

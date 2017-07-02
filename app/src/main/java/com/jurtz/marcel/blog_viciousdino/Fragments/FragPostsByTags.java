@@ -1,6 +1,7 @@
 package com.jurtz.marcel.blog_viciousdino.Fragments;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -72,7 +73,6 @@ public class FragPostsByTags extends Fragment {
         if (bundle != null) {
             tag.setID(bundle.getInt("tagID"));
             tag.setTitle(bundle.getString("tagName"));
-            tag.setUrl(bundle.getString("tagUrl"));
         }
 
         postList = (ListView)getView().findViewById(R.id.postList);
@@ -86,7 +86,7 @@ public class FragPostsByTags extends Fragment {
 
     private void populateList() {
 
-        url = tag.getUrl();
+        url = URLManager.getUrlPostsByTag(tag.getID());
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
@@ -129,7 +129,7 @@ public class FragPostsByTags extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 mapPost = (Map<String, Object>) list.get(position);
-                Tag tag = new Tag(((Double) mapPost.get("id")).intValue(), (String)mapPost.get("name"), (String) mapPost.get("link"));
+                Tag tag = new Tag(((Double) mapPost.get("id")).intValue(), (String)mapPost.get("name"));
 
                 Intent intent = new Intent(getActivity().getApplicationContext(), PostActivity.class);
                 intent.putExtra("id", "" + tag.getID());

@@ -90,7 +90,7 @@ public class FragTags extends Fragment {
                     mapPosts = (Map<String,Object>)list.get(i);
 
                     //Tag tag = new Tag(((Double)mapPosts.get("id")).intValue(),(String)mapPosts.get("Name"), (String)mapPosts.get("Link"));
-                    Tag tag = new Tag(((Double)mapPosts.get("id")).intValue(),(String)mapPosts.get("name"), URLManager.getUrlPostsByTag((String) mapPosts.get("name")));
+                    Tag tag = new Tag(((Double)mapPosts.get("id")).intValue(),(String)mapPosts.get("name"));
                     tagList.add(tag);
                     tagTitle[i] = (String)mapPosts.get("name");
                 }
@@ -115,12 +115,11 @@ public class FragTags extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 mapPosts = (Map<String, Object>) list.get(position);
-                Tag tag = new Tag(((Double) mapPosts.get("id")).intValue(), (String)mapPosts.get("name"), URLManager.getUrlPostsByTag((String) mapPosts.get("name")));
+                Tag tag = new Tag(((Double) mapPosts.get("id")).intValue(), (String)mapPosts.get("name"));
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("tagID",tag.getID());
                 bundle.putString("tagName", tag.getTitle());
-                bundle.putString("tagUrl",tag.getUrl());
 
                 Fragment fragment = new FragPostsByTags();
                 fragment.setArguments(bundle);
