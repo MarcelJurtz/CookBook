@@ -16,6 +16,7 @@ import com.jurtz.marcel.blog_viciousdino.Fragments.FragAllPosts;
 import com.jurtz.marcel.blog_viciousdino.Fragments.FragAuthors;
 import com.jurtz.marcel.blog_viciousdino.Fragments.FragImpressum;
 import com.jurtz.marcel.blog_viciousdino.Fragments.FragNewPosts;
+import com.jurtz.marcel.blog_viciousdino.Fragments.FragTags;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -97,6 +98,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_impressum:
                 fragment = new FragImpressum();
+                break;
+            case R.id.nav_tags:
+                fragment = new FragTags();
                 break;
         }
 

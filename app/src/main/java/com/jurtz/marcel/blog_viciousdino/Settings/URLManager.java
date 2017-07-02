@@ -18,4 +18,12 @@ public class URLManager {
         return posts + "?page=" + page;
     }
 
+    // all tags
+    public static String tags = url + "/tags";
+
+    // posts by tag
+    public static String getUrlPostsByTag(String tag) {
+        return posts + "?tag=" + tag;
+    }
+
 }

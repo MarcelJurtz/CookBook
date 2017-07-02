@@ -31,4 +31,7 @@
 
     <string name="page">Page</string>
     <string name="new_posts">Newest Posts</string>
+
+    <string name="all_tags">Tags</string>
+    <string name="toast_no_tag">No tag selected</string>
 </resources>
