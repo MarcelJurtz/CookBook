@@ -21,6 +21,11 @@ public class URLManager {
     // all tags
     public static String tags = url + "/tags";
 
+    // tags for page x
+    public static String GetPageUrlTags(int page) {
+        return tags + "?page=" + page;
+    }
+
     // posts by tag
     public static String getUrlPostsByTag(int tagID) {
         return posts + "?tags=" + tagID;

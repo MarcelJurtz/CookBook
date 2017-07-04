@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,9 +39,13 @@ public class FragTags extends Fragment {
     // GUI
     ProgressDialog progressDialog;
     ListView lvTagList;
+    Button cmdNextPage;
+    Button cmdPrevPage;
+    TextView lblTagPageInfo;
 
     // VARIABLES
     String url;
+    int currentBlogPage;
 
     // to save fetched blog data
     List<Object> list;
@@ -68,15 +74,37 @@ public class FragTags extends Fragment {
     public void onStart() {
         super.onStart();
 
+        currentBlogPage = 1;
+
         lvTagList = (ListView)getView().findViewById(R.id.lvTagList);
-        tagList = new ArrayList<>();
+        lblTagPageInfo = (TextView)getView().findViewById(R.id.lblTagPageInfo);
+
+        cmdNextPage = (Button)getView().findViewById(R.id.cmdNextPage);
+        cmdPrevPage = (Button)getView().findViewById(R.id.cmdPrevPage);
+        cmdNextPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentBlogPage++;
+                populateList();
+            }
+        });
+        cmdPrevPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentBlogPage > 1) {
+                    currentBlogPage--;
+                    populateList();
+                }
+            }
+        });
 
         populateList();
     }
 
     private void populateList() {
 
-        url = URLManager.tags;
+        url = URLManager.GetPageUrlTags(currentBlogPage);
+        tagList = new ArrayList<>();
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
@@ -124,6 +152,14 @@ public class FragTags extends Fragment {
                 Toast.makeText(getActivity(), "Some error occurred", Toast.LENGTH_LONG).show();
             }
         });
+
+        if(currentBlogPage == 1) {
+            cmdPrevPage.setEnabled(false);
+        } else if (!cmdPrevPage.isEnabled()) {
+            cmdPrevPage.setEnabled(true);
+        }
+
+        lblTagPageInfo.setText(getContext().getResources().getString(R.string.all_tags) + " - " + getContext().getResources().getString(R.string.page) + currentBlogPage);
 
         RequestQueue rQueue = Volley.newRequestQueue(getActivity());
         rQueue.add(request);
