@@ -45,7 +45,11 @@ public class FragTags extends Fragment {
     List<Object> list;
     Gson gson;
     List<Tag> tagList;
+
+    String tagTitleTemp[];
     String tagTitle[];
+    int tagCount;
+
     Map<String, Object> mapPosts;
 
     // to submit post id when selected
@@ -79,20 +83,35 @@ public class FragTags extends Fragment {
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
 
+        // Fetch all tags and push them to listview
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 gson = new Gson();
                 list = (List) gson.fromJson(s, List.class);
-                tagTitle = new String[list.size()];
+                tagTitleTemp = new String[list.size()];
+                tagCount = 0;
 
                 for(int i=0;i<list.size();++i){
                     mapPosts = (Map<String,Object>)list.get(i);
 
                     //Tag tag = new Tag(((Double)mapPosts.get("id")).intValue(),(String)mapPosts.get("Name"), (String)mapPosts.get("Link"));
-                    Tag tag = new Tag(((Double)mapPosts.get("id")).intValue(),(String)mapPosts.get("name"));
-                    tagList.add(tag);
-                    tagTitle[i] = (String)mapPosts.get("name");
+                    Tag tag = new Tag(((Double)mapPosts.get("id")).intValue(),(String)mapPosts.get("name"), ((Double)mapPosts.get("count")).intValue());
+
+                        tagList.add(tag);
+                        tagTitleTemp[i] = (String)mapPosts.get("name");
+                    if(tag.getCount() > 0) {
+                        tagCount++;
+                    }
+                }
+
+                tagTitle = new String[tagCount];
+                int iterator = 0;
+                for(int i = 0; i < tagList.size(); i++) {
+                    if(tagList.get(i).getCount() > 0) {
+                        tagTitle[iterator] = tagList.get(i).getTitle();
+                        iterator++;
+                    }
                 }
 
                 lvTagList.setAdapter(new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, tagTitle));
@@ -114,8 +133,14 @@ public class FragTags extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                mapPosts = (Map<String, Object>) list.get(position);
-                Tag tag = new Tag(((Double) mapPosts.get("id")).intValue(), (String)mapPosts.get("name"));
+                //mapPosts = (Map<String, Object>) list.get(position);
+                //Tag tag = new Tag(((Double) mapPosts.get("id")).intValue(), (String)mapPosts.get("name"));
+                Tag tag = new Tag();
+                for(int i = 0; i < tagList.size(); i++) {
+                    if(tagList.get(i).getTitle() == tagTitle[position]) {
+                        tag = tagList.get(i);
+                    }
+                }
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("tagID",tag.getID());

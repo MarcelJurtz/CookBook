@@ -4,6 +4,7 @@ public class Tag {
 
     private String title;
     private int id;
+    private int count;
 
     public Tag() {
 
@@ -17,6 +18,16 @@ public class Tag {
         this.id = id;
     }
 
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public Tag(int id, String title, int count) {
+        this.id = id;
+        this.title = title;
+        this.count = count;
+    }
+
     public Tag(int id, String title) {
         this.id = id;
         this.title = title;
@@ -28,5 +39,9 @@ public class Tag {
 
     public int getID() {
         return this.id;
+    }
+
+    public int getCount() {
+        return this.count;
     }
 }
