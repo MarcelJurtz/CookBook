@@ -1,13 +1,10 @@
 # Vicious Dino - Android
 
-<table>
-	<tr>
-		<td>![Vicious Dino Logo](assets/logo_dark_150.png)</td>
-		<td>Repo for the ViciousDino Android App, currently including the Blog.<br/><br/>The blog is available on [blog.vicious-dino.de](http://blog.vicious-dino.de/).  
-    The main purpose of it is to document our progress in VR indie game development for the htc vive,
-    but contains posts about all kinds of related topics.</td>
-	</tr>
-</table>
+![Vicious Dino Logo](assets/logo_dark_150.png)
+
+Repo for the ViciousDino Android App, currently including the Blog.<br/><br/>The blog is available on [blog.vicious-dino.de](http://blog.vicious-dino.de/).  
+
+The main purpose of it is to document our progress in VR indie game development for the htc vive, but contains posts about all kinds of related topics.
 
 ## Functionality
 
