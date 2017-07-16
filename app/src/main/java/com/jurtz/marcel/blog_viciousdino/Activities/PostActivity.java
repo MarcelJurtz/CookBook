@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 //import android.widget.Toolbar;
@@ -71,10 +73,30 @@ public class PostActivity extends AppCompatActivity {
 
         //final String cssInclusion = "<head><link rel=\"stylesheet\" type=\"text/css\" src=\"enlighterJS.css\"</head>";
         final String imageResize = "<style>img{display: inline; height: auto; max-width: 100%;}</style>";
-        final String cssInclusion = "<head><link rel=\"stylesheet\" type=\"text/css\" href=\"stylesheet.css\" /></head>";
+        final String cssJsInclusion = "<head><link rel=\"stylesheet\" type=\"text/css\" href=\"stylesheet.css\" /><script src='images.js'></script></head>";
 
         title = (TextView)findViewById(R.id.title);
         content = (WebView)findViewById(R.id.content);
+        //content.setWebChromeClient(new WebChromeClient());
+        content.getSettings().setJavaScriptEnabled(true);
+
+        content.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                getWindow().setTitle(title); //Set Activity tile to page title.
+            }
+        });
+
+        content.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                view.getSettings().setSupportZoom(true);
+                view.getSettings().setBuiltInZoomControls(true);
+                return false;
+            }
+        });
+
         info = (TextView)findViewById(R.id.txtAuthorInfo);
 
         progressDialog = new ProgressDialog(PostActivity.this);
@@ -100,6 +122,7 @@ public class PostActivity extends AppCompatActivity {
 
                 String strContent = mapContent.get("rendered").toString();
                 strContent = strContent.replace(readMoreTag, "");
+                strContent = strContent.replace("<img ","<img onclick=\"window.open(this.src)\"");
 
                 String strTitle = mapTitle.get("rendered").toString();
                 title.setText(PreferencesManager.fixString(strTitle));
@@ -108,7 +131,7 @@ public class PostActivity extends AppCompatActivity {
                 info.setText(publishDate + " by " + AuthorManager.getAuthor(authorID.toString()));
                 // content.loadData(imageResize + strContent, "text/html", "UTF-8");
                 // content.loadData(imageResize + strContent, "text/html; charset=utf-8", "utf-8");
-                content.loadDataWithBaseURL("file:///android_asset/", cssInclusion + imageResize + strContent, "text/html; charset=utf-8", "utf-8", null);
+                content.loadDataWithBaseURL("file:///android_asset/", cssJsInclusion + imageResize + strContent, "text/html; charset=utf-8", "utf-8", null);
 
                 progressDialog.dismiss();
             }
